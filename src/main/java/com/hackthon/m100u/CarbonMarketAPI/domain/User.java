@@ -3,7 +3,7 @@ package com.hackthon.m100u.CarbonMarketAPI.domain;
 import java.util.Date;
 
 public class User {
-    private long id;
+    private Long id;
     private String cpf;
     private String email;
     private String password;
@@ -13,11 +13,11 @@ public class User {
 
     }
 
-    public User(long id) {
+    public User(Long id) {
         this.id = id;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 

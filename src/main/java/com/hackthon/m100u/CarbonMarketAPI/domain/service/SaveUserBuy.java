@@ -23,11 +23,14 @@ public class SaveUserBuy {
     @Autowired
     UserBuyItemRepository userBuyItemRepository;
 
-    public UserPurchase execute(UserPurchase userPurchase){
+    @Autowired
+    UserRepository userRepository;
+
+    public void execute(UserPurchase userPurchase){
         UserBuyEntity userBuyEntity = toEntity(userPurchase);
         userBuyRepository.save(userBuyEntity);
         userPurchase.getItems().stream().forEach( item -> userBuyItemRepository.save(toEntity(item,userBuyEntity)));
-        return null;
+        return;
 
     }
 
@@ -35,7 +38,12 @@ public class SaveUserBuy {
         UserBuyEntity userBuyEntity = new UserBuyEntity();
         Date now = new Date();
         userBuyEntity.setMarket(new MarketEntity(userPurchage.getMarket().getId()));
-        userBuyEntity.setUser(new UserSystemEntity(userPurchage.getUser().getId()));
+        if(userPurchage.getUser().getId() != null) {
+            userBuyEntity.setUser(new UserSystemEntity(userPurchage.getUser().getId()));
+        }else{
+            UserSystemEntity userSystemEntity = userRepository.findByCpf(userPurchage.getUser().getCpf()).get();
+            userBuyEntity.setUser(userSystemEntity);
+        }
         userBuyEntity.setCreatedAt(now);
         return userBuyEntity;
     }

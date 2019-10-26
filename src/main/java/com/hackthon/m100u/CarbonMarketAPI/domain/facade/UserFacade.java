@@ -13,6 +13,7 @@ import com.hackthon.m100u.CarbonMarketAPI.domain.service.RetrieveUserService;
 import io.jsonwebtoken.JwtHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Optional;
@@ -32,6 +33,7 @@ public class UserFacade {
     @Autowired
     private JwtConfig jwtConfig;
 
+    @Transactional
     public UserOutputTO createUser(UserInputTO userInputTO){
         User user = userInputTO.toUser();
         User created = createUserService.execute(user);
