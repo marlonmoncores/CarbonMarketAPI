@@ -3,3 +3,13 @@ spring:
     url: jdbc:postgresql://localhost:5432/carbonmarketdb
     username: postgres
     password: postgres
+  jpa:
+    show-sql: true
+    properties.hibernate.format_sql: true
+
+security:
+  jwt:
+    header: "Authorization"
+    prefix: "Bearer "
+    expiration: 36000
+    secret: "SeCrEt"
