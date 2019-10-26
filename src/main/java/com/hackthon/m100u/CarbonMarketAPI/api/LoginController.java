@@ -2,8 +2,6 @@ package com.hackthon.m100u.CarbonMarketAPI.api;
 
 import com.hackthon.m100u.CarbonMarketAPI.api.to.AuthInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.AuthOutputTO;
-import com.hackthon.m100u.CarbonMarketAPI.api.to.UserInputTO;
-import com.hackthon.m100u.CarbonMarketAPI.api.to.UserOutputTO;
 import com.hackthon.m100u.CarbonMarketAPI.domain.facade.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

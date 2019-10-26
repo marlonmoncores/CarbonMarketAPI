@@ -9,6 +9,7 @@ import com.hackthon.m100u.CarbonMarketAPI.api.to.UserOutputTO;
 import com.hackthon.m100u.CarbonMarketAPI.domain.User;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.AuthUserService;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.CreateUserService;
+import com.hackthon.m100u.CarbonMarketAPI.domain.service.RetrieveUserService;
 import io.jsonwebtoken.JwtHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,9 @@ public class UserFacade {
 
     @Autowired
     private CreateUserService createUserService;
+
+    @Autowired
+    private RetrieveUserService retrieveUserService;
 
     @Autowired
     private AuthUserService authUserService;
@@ -43,5 +47,9 @@ public class UserFacade {
             return authOutputTO;
         }
         return null;
+    }
+
+    public UserOutputTO findUserById(long userId) {
+        return new UserOutputTO(retrieveUserService.findById(userId));
     }
 }
