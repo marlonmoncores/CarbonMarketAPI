@@ -1,6 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.api.to;
 
-public class MarketBuyOutputTO {
+public class BuyOutputTO {
 
     private long totalghg;
     private String gradeghg;

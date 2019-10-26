@@ -1,5 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.api;
 
+import com.hackthon.m100u.CarbonMarketAPI.api.to.BuyOutputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserBuyInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserOutputTO;
@@ -31,8 +32,10 @@ public class UserController {
     }
 
     @PostMapping(path = "/user/buy")
-    public ResponseEntity<UserBuyInputTO> saveUserBuy(@RequestBody UserBuyInputTO userBuyInputTO){
-        //UserOutputTO createdUser = userFacade.createUser(userInputTO);
-        return ResponseEntity.ok().body(userBuyInputTO);
+    public ResponseEntity<BuyOutputTO> saveUserBuy(@RequestBody UserBuyInputTO userBuyInputTO){
+        BuyOutputTO buyOutputTO = new BuyOutputTO();
+        buyOutputTO.setGradeghg("A");
+        buyOutputTO.setTotalghg(12345);
+        return ResponseEntity.ok().body(buyOutputTO);
     }
 }
