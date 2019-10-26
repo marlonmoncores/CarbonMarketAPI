@@ -24,15 +24,19 @@ public class UserBuyFacade {
     @Transactional
     public BuyOutputTO saveUserBuy(UserBuyInputTO userBuyInputTO){
         UserPurchase userPurchase =userBuyInputTO.toUserPurchase();
-        saveUserBuy.execute(userPurchase);
-        return calculateBuyCost(userPurchase);
+        long purchaseId = saveUserBuy.execute(userPurchase);
+        BuyOutputTO buyOutputTO = calculateBuyCost(userPurchase);
+        buyOutputTO.setId(purchaseId);
+        return buyOutputTO;
     }
 
     @Transactional
     public BuyOutputTO saveUserBuy(MarketBuyInputTO marketBuyInputTO){
         UserPurchase userPurchase = marketBuyInputTO.toUserPurchase();
-        saveUserBuy.execute(marketBuyInputTO.toUserPurchase());
-        return calculateBuyCost(userPurchase);
+        long purchaseId = saveUserBuy.execute(marketBuyInputTO.toUserPurchase());
+        BuyOutputTO buyOutputTO = calculateBuyCost(userPurchase);
+        buyOutputTO.setId(purchaseId);
+        return buyOutputTO;
     }
 
     private BuyOutputTO calculateBuyCost(UserPurchase userPurchase){//TODO - calculate buy carbon cost

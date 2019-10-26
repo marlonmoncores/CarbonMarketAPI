@@ -1,12 +1,14 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.Date;
 
 public class User {
     private Long id;
     private String cpf;
     private String email;
-    private String password;
+    @JsonIgnore  private String password;
     private Date createdAt;
 
     public User() {

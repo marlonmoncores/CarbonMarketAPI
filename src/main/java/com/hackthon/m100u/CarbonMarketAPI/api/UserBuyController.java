@@ -29,7 +29,7 @@ public class UserBuyController {
     }
 
     @GetMapping(path = "/user/buy/{id}")
-    public ResponseEntity<UserPurchase> getUserBy(@PathParam("id") Long buyId, Principal principal){
+    public ResponseEntity<UserPurchase> getUserBy(@PathVariable("id") Long buyId, Principal principal){
         Optional<UserPurchase> userPurchaseOptional = userBuyFacade.getUserBuy(PrincipalHelper.getUser(principal), buyId);
         if(userPurchaseOptional.isPresent()) {
             return ResponseEntity.ok().body(userPurchaseOptional.get());

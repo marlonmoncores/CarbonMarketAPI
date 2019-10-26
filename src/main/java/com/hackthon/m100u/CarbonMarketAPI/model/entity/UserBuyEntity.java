@@ -26,8 +26,8 @@ public class UserBuyEntity {
     @JoinColumn(name="id_market")
     private MarketEntity market;
 
-    //@OneToMany(mappedBy = "user_buy", fetch = FetchType.LAZY)
-    //private List<UserBuyItemEntity> itens;
+    @OneToMany(mappedBy = "userBuy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserBuyItemEntity> itens;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
@@ -43,8 +43,7 @@ public class UserBuyEntity {
     }
 
     private List<ItemPurchase> toItens(){
-        //return itens.stream().map(item -> item.toItemPurchase()).collect(Collectors.toList());
-        return null;
+        return itens.stream().map(item -> item.toItemPurchase()).collect(Collectors.toList());
     }
 
 
