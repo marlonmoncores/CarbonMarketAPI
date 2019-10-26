@@ -28,15 +28,17 @@ CREATE TABLE public."item_category" (
 
 CREATE TABLE public."item" (
 	id BIGSERIAL NOT NULL,
-	barcode text NOT NULL,
+	external_id text NOT NULL,
 	name text NOT NULL,
+	carbon_serving double precision NOT NULL,
+	servings int NOT NULL,
+	serving_day int NOT NULL,
 	"created_at" timestamp with time zone NOT NULL DEFAULT now(),
 	item_category_id BIGSERIAL NOT NULL,
 	CONSTRAINT item_pk PRIMARY KEY (id),
-	CONSTRAINT item_un UNIQUE (barcode),
+	CONSTRAINT item_un UNIQUE (external_id),
 	FOREIGN KEY (item_category_id) REFERENCES item_category (id)
 );
-
 
 
 CREATE TABLE public."user_buy" (
@@ -51,11 +53,12 @@ CREATE TABLE public."user_buy" (
 );
 
 CREATE TABLE public."user_buy_item" (
+    id BIGSERIAL NOT NULL,
 	id_user_buy BIGSERIAL NOT NULL,
 	id_item BIGSERIAL NOT NULL,
 	quantity BIGSERIAL NOT NULL,
 
-	CONSTRAINT user_buy_item_pk PRIMARY KEY (id_user_buy,id_item),
+	CONSTRAINT user_buy_item_pk PRIMARY KEY (id),
 	FOREIGN KEY (id_user_buy) REFERENCES user_buy (id),
 	FOREIGN KEY (id_item) REFERENCES item (id)
 );

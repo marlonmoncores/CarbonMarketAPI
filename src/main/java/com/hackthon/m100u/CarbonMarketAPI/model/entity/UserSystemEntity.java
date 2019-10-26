@@ -13,6 +13,12 @@ public class UserSystemEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    public UserSystemEntity() {
+    }
+
+    public UserSystemEntity(long id) {
+        this.id = id;
+    }
 
     private String cpf;
     private String email;

@@ -1,29 +1,19 @@
-package com.hackthon.m100u.CarbonMarketAPI.model.entity;
+package com.hackthon.m100u.CarbonMarketAPI.domain;
 
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name="market")
-public class MarketEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Market {
     private long id;
-
-
     private String name;
-
-    @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public MarketEntity() {
+    public Market() {
+
     }
 
-    public MarketEntity(long id) {
+    public Market(long id) {
         this.id = id;
     }
-
 
     public long getId() {
         return id;

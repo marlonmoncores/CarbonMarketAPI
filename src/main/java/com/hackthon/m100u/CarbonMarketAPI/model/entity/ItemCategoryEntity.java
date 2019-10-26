@@ -4,26 +4,18 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="market")
-public class MarketEntity {
+@Table(name="item_category")
+public class ItemCategoryEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-
     private String name;
-
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
-    public MarketEntity() {
-    }
-
-    public MarketEntity(long id) {
-        this.id = id;
-    }
-
+    private Boolean optional;
+    private Integer dailyPortions;
 
     public long getId() {
         return id;
@@ -47,5 +39,21 @@ public class MarketEntity {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Boolean getOptional() {
+        return optional;
+    }
+
+    public void setOptional(Boolean optional) {
+        this.optional = optional;
+    }
+
+    public Integer getDailyPortions() {
+        return dailyPortions;
+    }
+
+    public void setDailyPortions(Integer dailyPortions) {
+        this.dailyPortions = dailyPortions;
     }
 }

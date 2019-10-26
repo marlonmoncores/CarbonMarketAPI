@@ -9,6 +9,14 @@ public class User {
     private String password;
     private Date createdAt;
 
+    public User() {
+
+    }
+
+    public User(long id) {
+        this.id = id;
+    }
+
     public long getId() {
         return id;
     }

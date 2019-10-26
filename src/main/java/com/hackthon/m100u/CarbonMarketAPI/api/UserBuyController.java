@@ -1,5 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.api;
 
+import com.hackthon.m100u.CarbonMarketAPI.api.helper.PrincipalHelper;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.BuyOutputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserBuyInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserInputTO;
@@ -15,20 +16,18 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserController {
+public class UserBuyController {
 
     @Autowired
-    private UserFacade userFacade;
+    private UserBuyFacade userBuyFacade;
 
-    @PostMapping(path = "/user")
-    public ResponseEntity<UserOutputTO> createUser(@RequestBody UserInputTO userInputTO){
-        UserOutputTO createdUser = userFacade.createUser(userInputTO);
-        return ResponseEntity.ok().body(createdUser);
-    }
-
-    @GetMapping("/me")
-    public ResponseEntity<UserOutputTO> retrieveUser(Principal principal){
-        UserOutputTO createdUser = userFacade.findUserById(Long.parseLong(principal.getName()));
-        return ResponseEntity.ok().body(createdUser);
+    @PostMapping(path = "/user/buy")
+    public ResponseEntity<BuyOutputTO> saveUserBuy(@RequestBody UserBuyInputTO userBuyInputTO, Principal principal){
+        userBuyInputTO.setIdUser(PrincipalHelper.getUser(principal));
+        userBuyFacade.saveUserBuy(userBuyInputTO);
+        BuyOutputTO buyOutputTO = new BuyOutputTO();
+        buyOutputTO.setGradeghg("A");
+        buyOutputTO.setTotalghg(12345);
+        return ResponseEntity.ok().body(buyOutputTO);
     }
 }

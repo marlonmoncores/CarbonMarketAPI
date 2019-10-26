@@ -4,16 +4,16 @@ import java.util.List;
 
 public class MarketBuyInputTO {
 
-    private long idUser;
+    private String cpf;
 
     private List<UserBuyItemTO> items;
 
-    public long getIdUser() {
-        return idUser;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setIdUser(long idUser) {
-        this.idUser = idUser;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
     public List<UserBuyItemTO> getItems() {
