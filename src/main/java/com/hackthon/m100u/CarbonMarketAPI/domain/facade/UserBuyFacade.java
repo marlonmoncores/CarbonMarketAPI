@@ -4,16 +4,22 @@ import com.hackthon.m100u.CarbonMarketAPI.api.to.BuyOutputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.MarketBuyInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.api.to.UserBuyInputTO;
 import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
+import com.hackthon.m100u.CarbonMarketAPI.domain.service.ReadUserBuy;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.SaveUserBuy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Component
 public class UserBuyFacade {
 
     @Autowired
     private SaveUserBuy saveUserBuy;
+
+    @Autowired
+    private ReadUserBuy readUserBuy;
 
     @Transactional
     public BuyOutputTO saveUserBuy(UserBuyInputTO userBuyInputTO){
@@ -38,6 +44,8 @@ public class UserBuyFacade {
     }
 
 
-    public void getUserBuy(long user, Integer buyId) {
+    public Optional<UserPurchase> getUserBuy(long userId, Long buyId) {
+        Optional<UserPurchase> userPurchase = readUserBuy.execute(userId, buyId);
+        return userPurchase;
     }
 }

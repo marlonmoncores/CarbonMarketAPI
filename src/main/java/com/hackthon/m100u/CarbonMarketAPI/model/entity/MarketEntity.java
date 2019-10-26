@@ -1,5 +1,7 @@
 package com.hackthon.m100u.CarbonMarketAPI.model.entity;
 
+import com.hackthon.m100u.CarbonMarketAPI.domain.Market;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -22,6 +24,14 @@ public class MarketEntity {
 
     public MarketEntity(long id) {
         this.id = id;
+    }
+
+    public Market toMarket(){
+        Market market = new Market();
+        market.setCreatedAt(createdAt);
+        market.setName(name);
+        market.setId(id);
+        return market;
     }
 
 

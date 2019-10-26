@@ -1,5 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.model.entity;
 
+import com.hackthon.m100u.CarbonMarketAPI.domain.Item;
 import com.hackthon.m100u.CarbonMarketAPI.domain.ItemCategory;
 
 import javax.persistence.*;
@@ -29,6 +30,19 @@ public class ItemEntity {
     }
     public ItemEntity(long id) {
         this.id = id;
+    }
+
+    public Item toItem() {
+        Item item = new Item();
+        item.setCarbonServing(carbonServing);
+        item.setCategory(category.toCategory());
+        item.setCreatedAt(createdAt);
+        item.setExternalId(externalId);
+        item.setId(id);
+        item.setName(name);
+        item.setServingDay(servingDay);
+        item.setServings(servings);
+        return item;
     }
 
     public long getId() {
@@ -94,4 +108,6 @@ public class ItemEntity {
     public void setCategory(ItemCategoryEntity category) {
         this.category = category;
     }
+
+
 }

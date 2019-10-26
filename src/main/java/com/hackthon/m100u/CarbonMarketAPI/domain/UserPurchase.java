@@ -1,12 +1,13 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain;
 
+import java.util.Date;
 import java.util.List;
 
 public class UserPurchase {
     private User user;
     private Market market;
     private List<ItemPurchase> items;
-    private Double createdAt;
+    private Date createdAt;
 
 
     public User getUser() {
@@ -33,11 +34,11 @@ public class UserPurchase {
         this.items = items;
     }
 
-    public Double getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Double createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 }

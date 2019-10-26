@@ -1,5 +1,7 @@
 package com.hackthon.m100u.CarbonMarketAPI.model.entity;
 
+import com.hackthon.m100u.CarbonMarketAPI.domain.ItemCategory;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -16,6 +18,16 @@ public class ItemCategoryEntity {
 
     private Boolean optional;
     private Integer dailyPortions;
+
+    public ItemCategory toCategory() {
+        ItemCategory itemCategory = new ItemCategory();
+        itemCategory.setCreatedAt(createdAt);
+        itemCategory.setDailyPortions(dailyPortions);
+        itemCategory.setId(id);
+        itemCategory.setName(name);
+        itemCategory.setOptional(optional);
+        return itemCategory;
+    }
 
     public long getId() {
         return id;
@@ -56,4 +68,6 @@ public class ItemCategoryEntity {
     public void setDailyPortions(Integer dailyPortions) {
         this.dailyPortions = dailyPortions;
     }
+
+
 }
