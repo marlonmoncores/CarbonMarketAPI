@@ -33,10 +33,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // authorization requests config
                 .authorizeRequests()
                 // allow all who are accessing "auth" service
+                .antMatchers(HttpMethod.GET, "/item").permitAll()
                 .antMatchers(HttpMethod.POST, "/user").permitAll()
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/market/user/buy").permitAll()
-                .antMatchers(HttpMethod.GET, "/item").permitAll()
+                .antMatchers(HttpMethod.OPTIONS, "/market/user/buy").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "/*").permitAll()
                 .anyRequest().authenticated();
     }
