@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+///@Service
 class CalculateCarbonConsumptionService {
 
-    @Autowired
+    //@Autowired
     private ItemRepository itemRepository;
 
 
@@ -34,7 +34,7 @@ class CalculateCarbonConsumptionService {
 
 
 
-
+/*
     void contextLoads() {
         double reductionTargetPercentage = 0.05;
 
@@ -133,6 +133,6 @@ class CalculateCarbonConsumptionService {
                 total += consumptionItem.getValue() * foodData.get(consumptionItem.getKey()).getServings();
         }
         return total;
-    }
+    }*/
 }
 
