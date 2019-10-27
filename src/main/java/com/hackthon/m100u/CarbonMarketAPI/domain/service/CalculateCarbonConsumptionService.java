@@ -1,9 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain.service;
 
-import com.hackthon.m100u.CarbonMarketAPI.domain.Consumption;
-import com.hackthon.m100u.CarbonMarketAPI.domain.Item;
-import com.hackthon.m100u.CarbonMarketAPI.domain.ItemCategory;
-import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
+import com.hackthon.m100u.CarbonMarketAPI.domain.*;
 import com.hackthon.m100u.CarbonMarketAPI.model.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,19 +11,12 @@ import java.util.stream.Collectors;
 @Service
 public class CalculateCarbonConsumptionService {
 
-    @Autowired
     private ItemRepository itemRepository;
-
-
     private final Map<Long, ItemCategory> foodCategories = new HashMap<>();
     private final Map<Long, Item> foodData = new HashMap<>();
 
-
-    public CalculateCarbonConsumptionService() {
-
-    }
-
-    private void fillData() {
+    @Autowired
+    public CalculateCarbonConsumptionService(ItemRepository itemRepository) {
         itemRepository.findAll().forEach(item -> {
             foodData.put(item.getId(), item.toItem());
             foodCategories.put(item.getCategory().getId(), item.getCategory().toCategory());
@@ -38,18 +28,21 @@ public class CalculateCarbonConsumptionService {
     }
 
     public Consumption calculateTotalConsumption(List<UserPurchase> userPurchaseList) {
-        fillData();
         var foodConsumption = convertUserPurchaseToMap(userPurchaseList);
         return calculateTotalConsumption(foodConsumption);
     }
 
-    public Map<Long, Integer> suggestDiet(List<UserPurchase> userPurchaseList) {
-        fillData();
+    public Consumption calculateTotalConsumptionWithItem(List<ItemPurchase> itemPurchaseList) {
+        var foodConsumption = convertItemPurchaseToMap(itemPurchaseList);
+        return calculateTotalConsumption(foodConsumption);
+    }
+
+    public List<ItemPurchase> suggestDiet(List<UserPurchase> userPurchaseList) {
         double reductionTargetPercentage = 0.05;
 
         var foodConsumption = convertUserPurchaseToMap(userPurchaseList);
         double totalConsumption = calculateTotalConsumption(foodConsumption).getTotalghg();
-        System.out.println(totalConsumption);
+
         double targetConsumption = totalConsumption * (1 - reductionTargetPercentage);
         balanceDiet(foodConsumption, targetConsumption);
         boolean changedOrStart = true;
@@ -67,7 +60,16 @@ public class CalculateCarbonConsumptionService {
         while (calculateTotalConsumption(foodConsumption).getTotalghg() > targetConsumption && changedOrStart) {
             changedOrStart = substituteWithinCategory(foodData, foodConsumption);
         }
-        return foodConsumption;
+        return convertToItemPurchaseList(foodConsumption);
+    }
+
+    private List<ItemPurchase> convertToItemPurchaseList(Map<Long, Integer> foodConsumption){
+        return foodConsumption.entrySet().stream().map(entry ->{
+            ItemPurchase itemPurchase = new ItemPurchase();
+            itemPurchase.setItem(foodData.get(entry.getKey()));
+            itemPurchase.setQuantity(entry.getValue());
+            return itemPurchase;
+        }).collect(Collectors.toList());
     }
 
     private HashMap<Long, Integer> convertUserPurchaseToMap(List<UserPurchase> userPurchaseList) {
@@ -81,6 +83,19 @@ public class CalculateCarbonConsumptionService {
                     foodConsumption.put(item.getItem().getId(), currentQuantity + item.getQuantity());
                 })
         );
+        return foodConsumption;
+    }
+
+    private HashMap<Long, Integer> convertItemPurchaseToMap(List<ItemPurchase> itemPurchaseList) {
+        var foodConsumption = new HashMap<Long, Integer>();
+        itemPurchaseList.stream().forEach(itemPurchase ->
+            {
+                Integer currentQuantity = foodConsumption.get(itemPurchase.getItem().getId());
+                if (currentQuantity == null) {
+                    currentQuantity = 0;
+                }
+                foodConsumption.put(itemPurchase.getItem().getId(), currentQuantity + itemPurchase.getQuantity());
+            });
         return foodConsumption;
     }
 
