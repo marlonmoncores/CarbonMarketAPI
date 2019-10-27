@@ -1,6 +1,7 @@
 package com.hackthon.m100u.CarbonMarketAPI.model.entity;
 
 import com.hackthon.m100u.CarbonMarketAPI.domain.Item;
+import com.hackthon.m100u.CarbonMarketAPI.domain.ItemPurchase;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -22,6 +23,13 @@ public class UserBuyItemEntity {
     private ItemEntity item;
 
     private Integer quantity;
+
+    public ItemPurchase toItemPurchase() {
+        ItemPurchase itemPurchase = new ItemPurchase();
+        itemPurchase.setQuantity(quantity);
+        itemPurchase.setItem(item.toItem());
+        return itemPurchase;
+    }
 
     public long getId() {
         return id;

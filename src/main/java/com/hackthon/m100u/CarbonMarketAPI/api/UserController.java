@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 
 @RestController
-@RequestMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping()
 public class UserController {
 
     @Autowired
     private UserFacade userFacade;
 
-    @PostMapping(path = "/user")
+    @PostMapping(path = "/user", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserOutputTO> createUser(@RequestBody UserInputTO userInputTO){
         UserOutputTO createdUser = userFacade.createUser(userInputTO);
         return ResponseEntity.ok().body(createdUser);
     }
 
-    @GetMapping("/me")
+    @GetMapping(path="/me", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserOutputTO> retrieveUser(Principal principal){
         UserOutputTO createdUser = userFacade.findUserById(Long.parseLong(principal.getName()));
         return ResponseEntity.ok().body(createdUser);

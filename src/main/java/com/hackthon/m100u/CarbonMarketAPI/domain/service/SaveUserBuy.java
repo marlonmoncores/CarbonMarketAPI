@@ -26,11 +26,11 @@ public class SaveUserBuy {
     @Autowired
     UserRepository userRepository;
 
-    public void execute(UserPurchase userPurchase){
+    public long execute(UserPurchase userPurchase){
         UserBuyEntity userBuyEntity = toEntity(userPurchase);
         userBuyRepository.save(userBuyEntity);
         userPurchase.getItems().stream().forEach( item -> userBuyItemRepository.save(toEntity(item,userBuyEntity)));
-        return;
+        return userBuyEntity.getId();
 
     }
 

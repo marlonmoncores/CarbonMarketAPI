@@ -1,10 +1,14 @@
 package com.hackthon.m100u.CarbonMarketAPI.model.entity;
 
+import com.hackthon.m100u.CarbonMarketAPI.domain.ItemPurchase;
 import com.hackthon.m100u.CarbonMarketAPI.domain.Market;
 import com.hackthon.m100u.CarbonMarketAPI.domain.User;
+import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name="user_buy")
@@ -22,8 +26,25 @@ public class UserBuyEntity {
     @JoinColumn(name="id_market")
     private MarketEntity market;
 
+    @OneToMany(mappedBy = "userBuy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<UserBuyItemEntity> itens;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
+
+    public UserPurchase toUserPurchase(){
+        UserPurchase userPurchase = new UserPurchase();
+        userPurchase.setMarket(market.toMarket());
+        userPurchase.setUser(user.toUser());
+        userPurchase.setCreatedAt(createdAt);
+        userPurchase.setItems(toItens());
+
+        return userPurchase;
+    }
+
+    private List<ItemPurchase> toItens(){
+        return itens.stream().map(item -> item.toItemPurchase()).collect(Collectors.toList());
+    }
 
 
     public long getId() {
