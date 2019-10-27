@@ -1,7 +1,6 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain.facade;
 
 import com.hackthon.m100u.CarbonMarketAPI.api.to.*;
-import com.hackthon.m100u.CarbonMarketAPI.domain.Consumption;
 import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.CalculateCarbonConsumptionService;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.ReadUserBuy;
@@ -10,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +25,8 @@ public class UserBuyFacade {
     private CalculateCarbonConsumptionService calculateCarbonConsumptionService;
 
     @Transactional
-    public BuyOutputTO saveUserBuy(UserBuyInputTO userBuyInputTO){
-        UserPurchase userPurchase =userBuyInputTO.toUserPurchase();
+    public BuyOutputTO saveUserBuy(UserBuyInputTO userBuyInputTO) {
+        UserPurchase userPurchase = userBuyInputTO.toUserPurchase();
         long purchaseId = saveUserBuy.execute(userPurchase);
         BuyOutputTO buyOutputTO = calculateBuyCost(userPurchase);
         buyOutputTO.setId(purchaseId);
@@ -36,7 +34,7 @@ public class UserBuyFacade {
     }
 
     @Transactional
-    public BuyOutputTO saveUserBuy(MarketBuyInputTO marketBuyInputTO){
+    public BuyOutputTO saveUserBuy(MarketBuyInputTO marketBuyInputTO) {
         UserPurchase userPurchase = marketBuyInputTO.toUserPurchase();
         long purchaseId = saveUserBuy.execute(marketBuyInputTO.toUserPurchase());
         BuyOutputTO buyOutputTO = calculateBuyCost(userPurchase);
@@ -45,7 +43,7 @@ public class UserBuyFacade {
     }
 
     @Transactional
-    public BuyOutputTO saveUserCodeBuy( UserBuyCodeInputTO userBuyCodeInputTO){
+    public BuyOutputTO saveUserCodeBuy(UserBuyCodeInputTO userBuyCodeInputTO) {
         UserPurchase userPurchase = null;//TODO - consultar receita
         long purchaseId = saveUserBuy.execute(userPurchase);
         BuyOutputTO buyOutputTO = calculateBuyCost(userPurchase);
@@ -53,11 +51,10 @@ public class UserBuyFacade {
         return buyOutputTO;
     }
 
-    private BuyOutputTO calculateBuyCost(UserPurchase userPurchase){//TODO - calculate buy carbon cost
+    private BuyOutputTO calculateBuyCost(UserPurchase userPurchase) {
         BuyOutputTO buyOutputTO = new BuyOutputTO();
-        Consumption consumption = calculateCarbonConsumptionService.calculateTotalConsumption(userPurchase);
-        buyOutputTO.setTotalghg(consumption.getTotalghg());
-        buyOutputTO.setTotalH2O(consumption.getTotalH2O());
+        buyOutputTO.setConsumption(calculateCarbonConsumptionService.calculateTotalConsumption(userPurchase));
+
         return buyOutputTO;
     }
 

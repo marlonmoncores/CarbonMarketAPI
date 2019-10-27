@@ -22,28 +22,28 @@ public class CalculateCarbonConsumptionService {
     private final Map<Long, Item> foodData = new HashMap<>();
 
 
-    public CalculateCarbonConsumptionService(){
+    public CalculateCarbonConsumptionService() {
 
     }
 
-    private void fillData(){
-        itemRepository.findAll().stream().forEach(item ->{
+    private void fillData() {
+        itemRepository.findAll().forEach(item -> {
             foodData.put(item.getId(), item.toItem());
-            foodCategories.put(item.getCategory().getId(),item.getCategory().toCategory());
+            foodCategories.put(item.getCategory().getId(), item.getCategory().toCategory());
         });
     }
 
-    public Consumption calculateTotalConsumption(UserPurchase userPurchase){
-        return calculateTotalConsumption(Arrays.asList(userPurchase));
+    public Consumption calculateTotalConsumption(UserPurchase userPurchase) {
+        return calculateTotalConsumption(Collections.singletonList(userPurchase));
     }
 
-    public Consumption calculateTotalConsumption(List<UserPurchase> userPurchaseList){
+    public Consumption calculateTotalConsumption(List<UserPurchase> userPurchaseList) {
         fillData();
         var foodConsumption = convertUserPurchaseToMap(userPurchaseList);
         return calculateTotalConsumption(foodConsumption);
     }
 
-    public Map<Long, Integer> suggestDiet(List<UserPurchase> userPurchaseList){
+    public Map<Long, Integer> suggestDiet(List<UserPurchase> userPurchaseList) {
         fillData();
         double reductionTargetPercentage = 0.05;
 
@@ -70,7 +70,7 @@ public class CalculateCarbonConsumptionService {
         return foodConsumption;
     }
 
-    private HashMap<Long, Integer> convertUserPurchaseToMap(List<UserPurchase> userPurchaseList){
+    private HashMap<Long, Integer> convertUserPurchaseToMap(List<UserPurchase> userPurchaseList) {
         var foodConsumption = new HashMap<Long, Integer>();
         userPurchaseList.stream().forEach(userPurchase ->
                 userPurchase.getItems().stream().forEach(item -> {
@@ -147,7 +147,7 @@ public class CalculateCarbonConsumptionService {
             carbonConsumpton += (sampleItem.getValue() * itemData.getServings() * itemData.getCarbonServing());
             waterConsumption += (sampleItem.getValue() * itemData.getServings() * itemData.getWaterServing());
         }
-        return new Consumption(carbonConsumpton, waterConsumption);
+        return new Consumption(carbonConsumpton, waterConsumption, consumptionFoodItems.size());
     }
 
     private int getTotalCategoryServings(Map<Long, Item> foodData, Map<Long, Integer> consumptionData, Long category_id) {
