@@ -1,7 +1,9 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain.facade;
 
 import com.hackthon.m100u.CarbonMarketAPI.api.to.*;
+import com.hackthon.m100u.CarbonMarketAPI.domain.Consumption;
 import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
+import com.hackthon.m100u.CarbonMarketAPI.domain.service.CalculateCarbonConsumptionService;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.ReadUserBuy;
 import com.hackthon.m100u.CarbonMarketAPI.domain.service.SaveUserBuy;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class UserBuyFacade {
 
     @Autowired
     private ReadUserBuy readUserBuy;
+
+    @Autowired
+    private CalculateCarbonConsumptionService calculateCarbonConsumptionService;
 
     @Transactional
     public BuyOutputTO saveUserBuy(UserBuyInputTO userBuyInputTO){
@@ -50,9 +55,9 @@ public class UserBuyFacade {
 
     private BuyOutputTO calculateBuyCost(UserPurchase userPurchase){//TODO - calculate buy carbon cost
         BuyOutputTO buyOutputTO = new BuyOutputTO();
-        buyOutputTO.setGradeghg("A");
-        buyOutputTO.setTotalghg(12345);
-        buyOutputTO.setTotalH2O(0.2);
+        Consumption consumption = calculateCarbonConsumptionService.calculateTotalConsumption(userPurchase);
+        buyOutputTO.setTotalghg(consumption.getTotalghg());
+        buyOutputTO.setTotalH2O(consumption.getTotalH2O());
         return buyOutputTO;
     }
 

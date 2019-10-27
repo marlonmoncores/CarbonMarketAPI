@@ -1,19 +1,13 @@
 package com.hackthon.m100u.CarbonMarketAPI.api.to;
 
-import com.hackthon.m100u.CarbonMarketAPI.domain.UserPurchase;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.hackthon.m100u.CarbonMarketAPI.domain.Consumption;
+import lombok.Data;
 
-import java.util.List;
-
+@Data
 public class UserMonthlyReportOutputTO {
 
-    private List<UserPurchase> userPurchase;
+    @JsonUnwrapped
+    private Consumption consumption;
 
-
-    public List<UserPurchase> getUserPurchase() {
-        return userPurchase;
-    }
-
-    public void setUserPurchase(List<UserPurchase> userPurchase) {
-        this.userPurchase = userPurchase;
-    }
 }
