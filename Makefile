@@ -3,7 +3,7 @@ DEBUG_5005=-Dspring-boot.run.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket
 FLYWAY_MIGRATE= flyway:migrate
 FLYWAY_CLEAN= flyway:clean
 FLYWAY_DB_USER= -Dflyway.user=postgres
-FLYWAY_DB_PASSWORD= -Dflyway.password=postgres
+FLYWAY_DB_PASSWORD= -Dflyway.password=Code1234
 FLYWAY_DB_URL=-Dflyway.url=jdbc:postgresql://localhost:5432/carbonmarketdb
 
 docker-up-d:

@@ -1,41 +1,20 @@
 package com.hackthon.m100u.CarbonMarketAPI.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.Date;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Market {
     private long id;
     private String name;
     private Date createdAt;
 
-    public Market() {
-
-    }
-
     public Market(long id) {
         this.id = id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Date createdAt) {
-        this.createdAt = createdAt;
     }
 }

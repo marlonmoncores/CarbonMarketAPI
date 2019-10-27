@@ -35,6 +35,7 @@ CREATE TABLE public."item" (
 	serving_day int NOT NULL,
 	"created_at" timestamp with time zone NOT NULL DEFAULT now(),
 	item_category_id BIGSERIAL NOT NULL,
+    water_serving double precision NOT NULL,
 	CONSTRAINT item_pk PRIMARY KEY (id),
 	CONSTRAINT item_un UNIQUE (external_id),
 	FOREIGN KEY (item_category_id) REFERENCES item_category (id)

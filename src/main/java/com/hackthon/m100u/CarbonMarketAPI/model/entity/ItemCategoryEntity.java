@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name="item_category")
+@Table(name = "item_category")
 public class ItemCategoryEntity {
 
     @Id

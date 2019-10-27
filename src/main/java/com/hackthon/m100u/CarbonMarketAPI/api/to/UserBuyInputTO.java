@@ -28,7 +28,7 @@ public class UserBuyInputTO {
     }
 
     private List<ItemPurchase> toItensPurchaseList(){
-        return items.stream().map(item -> item.toItemPurchase()).collect(Collectors.toList());
+        return items.stream().map(UserBuyItemTO::toItemPurchase).collect(Collectors.toList());
     }
 
 
