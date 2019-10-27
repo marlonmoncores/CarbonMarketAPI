@@ -1,5 +1,5 @@
-INSERT INTO market (id, name) VALUES
-(1, 'LANCHONETE ALVORADA 2014 LTDA');
+INSERT INTO market (name) VALUES
+('Lanchonete Hackthon');
 
 INSERT INTO item_category (id, name, optional, daily_portions) VALUES
     (1, 'Protein-rich foods', false, 3)
@@ -25,10 +25,10 @@ INSERT INTO item (id, external_id, name, carbon_serving, servings, serving_day, 
         ,(14,71022,'Oatmeal', 0.10, 1, 3, 2, 20)
         ,(15,71023,'Potatoes', 0.04, 1, 3, 2,6)
         ,(16,71024,'Avocado', 0.19, 1, 3, 1, 45)
-        ,(17,71025,'Berries and grapes', 0.12, 3, 3, 1, 33)
-        ,(18,71026,'Tomatoes', 0.16, 1, 3, 1, 29)
-        ,(19,71027,'Apples', 0.03, 2, 3, 1,14)
-        ,(20,71028,'Bananas', 0.06, 1, 3, 1,9)
+        ,(17,964153,'Berries and grapes', 0.12, 3, 3, 1, 33)
+        ,(18,969877,'Tomatoes', 0.16, 1, 3, 1, 29)
+        ,(19,969912,'Apples', 0.03, 2, 3, 1,14)
+        ,(20,964152,'Bananas', 0.06, 1, 3, 1,9)
         ,(21,71029,'Citrus fruit', 0.03, 1, 3, 1,6)
         ,(22,9738,'Wine', 0.31, 1, 1, 4,13)
         ,(23,9739,'Beer', 0.67, 1, 3, 1,9)

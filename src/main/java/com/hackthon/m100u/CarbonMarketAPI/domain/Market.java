@@ -10,9 +10,14 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class Market {
-    private long id;
+    private Long id;
     private String name;
     private Date createdAt;
+
+    public Market(String name, Date createdAt) {
+        this.name = name;
+        this.createdAt = createdAt;
+    }
 
     public Market(long id) {
         this.id = id;

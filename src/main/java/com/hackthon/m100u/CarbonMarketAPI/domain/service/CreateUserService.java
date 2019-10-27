@@ -16,7 +16,6 @@ public class CreateUserService {
     UserRepository userRepository;
 
     public User execute(User user){
-        userRepository.findByCpf(user.getCpf());
         UserSystemEntity userCreated = userRepository.findByCpf(user.getCpf()).orElseGet(()-> {
             UserSystemEntity userSystemEntity = toEntity(user);
             userRepository.save(userSystemEntity);
