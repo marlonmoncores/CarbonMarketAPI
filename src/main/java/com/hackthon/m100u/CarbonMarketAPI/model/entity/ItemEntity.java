@@ -21,6 +21,7 @@ public class ItemEntity {
     private String externalId;
     private String name;
     private Double carbonServing;
+    private Double waterServing;
     private Integer servings;
     private Integer servingDay;
     @Temporal(TemporalType.TIMESTAMP)
@@ -37,6 +38,7 @@ public class ItemEntity {
     public Item toItem() {
         Item item = new Item();
         item.setCarbonServing(carbonServing);
+        item.setWaterServing(waterServing);
         item.setCategory(category.toCategory());
         item.setCreatedAt(createdAt);
         item.setExternalId(externalId);
