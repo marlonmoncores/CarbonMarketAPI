@@ -5,9 +5,11 @@ import com.hackthon.m100u.CarbonMarketAPI.domain.InvoiceRecord;
 import com.hackthon.m100u.CarbonMarketAPI.domain.Market;
 import com.hackthon.m100u.CarbonMarketAPI.model.ItemRepository;
 import com.hackthon.m100u.CarbonMarketAPI.model.entity.ItemEntity;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,7 +30,7 @@ public class SeleniumTests {
 
     @Test
     void parseQr() throws InterruptedException, ParseException {
-        System.setProperty("webdriver.chrome.driver", "c:\\chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
 
         ChromeDriver browser = new ChromeDriver();
 
@@ -67,7 +69,7 @@ public class SeleniumTests {
         int index_begin = info_text.indexOf("Emissão: ") + "Emissão: ".length();
 
         Invoice invoice = new Invoice(new SimpleDateFormat("dd/MM/yyyy").parse(info_text.substring(index_begin, index_begin + 10)),
-                new Market(0, browser.findElementById("u20").getText(), new Date())
+                new Market(0L, browser.findElementById("u20").getText(), new Date())
                 , (int) calculateKmItemsCarbon(invoiceRecords)
                 , (int) calculateBathItemsWater(invoiceRecords)
                 , calculateItemsPoint(invoiceRecords)
